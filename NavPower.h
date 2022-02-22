@@ -1,5 +1,5 @@
 /*
-NavPower.h
+NavPower.h - v1.0.0
 A header file for use with NavPower's binary navmesh files.
 
 Licensed under the MIT License
