@@ -138,7 +138,7 @@ namespace NavPower
         {
         public:
             uint32_t m_endianFlag = 0;
-            uint32_t m_version = 0x28; // he version of the nav graph, this case it is 40
+            uint32_t m_version = 0x28; // The version of the nav graph, this case it is 40
             uint32_t m_numGraphs = 1;  // Number of NavGraphs in this image
         };
 
@@ -199,15 +199,15 @@ namespace NavPower
         class Area
         {
         public:
-        uint64_t m_pProxy = 0;
-        uint64_t m_dynAreaData = 0;
-        uint64_t m_pFirstLink = 0;
-        uint64_t m_pSearchParent = 0;
-        Vec3 m_pos;
-        float m_radius;
-        uint32_t m_searchCost = 0xFFFFFFFF;
-        AreaUsageFlags m_usageFlags;
-        AreaFlags m_flags;
+            uint64_t m_pProxy = 0;
+            uint64_t m_dynAreaData = 0;
+            uint64_t m_pFirstLink = 0;
+            uint64_t m_pSearchParent = 0;
+            Vec3 m_pos;
+            float m_radius;
+            uint32_t m_searchCost = 0xFFFFFFFF;
+            AreaUsageFlags m_usageFlags;
+            AreaFlags m_flags;
 
             [[nodiscard]] Edge* GetFirstEdge()
             {
@@ -225,7 +225,7 @@ namespace NavPower
             char m_pad[4];
 
             // flags 1
-            // Obstacles, IOI doesn't have these on the stored graph
+            // Obstacles
             uint32_t GetObID() const { return m_flags1 & 0x7FFF; }
             void SetObID(uint32_t p_Value) { m_flags1 |= p_Value & 0x7FFF; }
 
@@ -276,7 +276,7 @@ namespace NavPower
 
     // Requires a pointer to the NavGraph, fixes Area pointers in the NavGraph
     // The reason we do this is so it actually points to an area in memory and
-    // not the file pointer relative to the start of the NavGraph
+    // not a pointer to a location in the file relative to the start of the NavGraph
     void FixAreaPointers(uintptr_t data, size_t areaBytes)
     {
         uintptr_t navGraphStart = data;
@@ -346,7 +346,7 @@ namespace NavPower
         }
     };
 
-    // Below helps with outputting the KDTree as Bounding Boxes
+    // Helps with outputting the k-d tree as Bounding Boxes
     struct KDTreeHelper
     {
         Binary::KDNode* m_node;
@@ -435,10 +435,9 @@ namespace NavPower
 
             kdNodes.push_back(KDTreeHelper{
                 m_rootKDNode,
-                m_kdTreeData->m_bbox
-            });
+                m_kdTreeData->m_bbox});
 
-            while(!kdNodes.empty())
+            while (!kdNodes.empty())
             {
                 KDTreeHelper parent = kdNodes.back();
                 kdNodes.pop_back();
@@ -453,15 +452,13 @@ namespace NavPower
                     // Left Node
                     kdNodes.push_back(KDTreeHelper{
                         parent.m_node->GetLeft(),
-                        parent.m_bbox
-                    });
+                        parent.m_bbox});
                     kdNodes.back().m_bbox.m_max[splitAxis] = parent.m_node->m_dLeft;
 
                     // Right Node
                     kdNodes.push_back(KDTreeHelper{
                         parent.m_node->GetRight(),
-                        parent.m_bbox
-                    });
+                        parent.m_bbox});
                     kdNodes.back().m_bbox.m_min[splitAxis] = parent.m_node->m_dRight;
                 }
             }
