@@ -34,7 +34,7 @@ SOFTWARE.
 
 #define FLT_EPSILON 1.192092896e-07F
 
-uint32_t rangeCheck(uint32_t val, uint32_t min, uint32_t max)
+uint32_t RangeCheck(uint32_t val, uint32_t min, uint32_t max)
 {
     if (val > max) return max;
     if (val < min) return min;
@@ -176,9 +176,9 @@ namespace NavPower
             uint32_t GetAreaUsageCount() const { return m_flags2 & 0x3FF; }
             void SetAreaUsageCount(uint32_t p_usageCount) { m_flags2 = (m_flags2 & ~0x3FF) | (p_usageCount & 0x3FF); }
             uint32_t GetObCostMult() const { return (m_flags2 & 0x000F0000) >> 16; }
-            void SetObCostMult(uint32_t p_obCostMult) { m_flags2 = (m_flags2 & ~0x000F0000) | ((rangeCheck(p_obCostMult, 1, 15) << 16) & 0x000F0000); }
+            void SetObCostMult(uint32_t p_obCostMult) { m_flags2 = (m_flags2 & ~0x000F0000) | ((RangeCheck(p_obCostMult, 1, 15) << 16) & 0x000F0000); }
             uint32_t GetStaticCostMult() const { return (m_flags2 & 0x00F00000) >> 20; }
-            void SetStaticCostMult(uint32_t p_staticCostMult) { m_flags2 = (m_flags2 & ~0x00F00000) | ((rangeCheck(p_staticCostMult, 1, 15) << 20) & 0x00F00000); }
+            void SetStaticCostMult(uint32_t p_staticCostMult) { m_flags2 = (m_flags2 & ~0x00F00000) | ((RangeCheck(p_staticCostMult, 1, 15) << 20) & 0x00F00000); }
             uint32_t GetBasisVert() const { return (m_flags2 & 0x7F000000) >> 24; }
             void SetBasisVert(uint32_t basisVert) { m_flags2 = (m_flags2 & ~0x7F000000) | ((basisVert << 24) & 0x7F000000); }
 
@@ -275,6 +275,8 @@ namespace NavPower
     }; // namespace Binary
 
     // Requires a pointer to the NavGraph, fixes Area pointers in the NavGraph
+    // The reason we do this is so it actually points to an area in memory and
+    // not the file pointer relative to the start of the NavGraph
     void FixAreaPointers(uintptr_t data, size_t areaBytes)
     {
         uintptr_t navGraphStart = data;
@@ -421,7 +423,7 @@ namespace NavPower
             // Sanity check
             if ((p_data - s_startPointer) != p_filesize)
             {
-                printf("[WARNING] What we read does not equal filesize!");
+                printf("[WARNING] What we read does not equal filesize!\n");
             }
         }
 
