@@ -303,7 +303,7 @@ namespace NavPower
         Binary::Area* m_area;
         std::vector<Binary::Edge*> m_edges;
 
-        // This was research and function was created by github.com/OrfeasZ aka NoFaTe
+        // This research and function was created by github.com/OrfeasZ aka NoFaTe
         // This marked vertex is calculated by drawing a line between the first and second vertex in the list
         // and then going through each of the other vertices, finding the point perpendicular to that line for each,
         // and picking the one with the biggest distance between the perpendicular point and the vertex.
