@@ -87,8 +87,8 @@ namespace NavPower
 
     enum class AreaUsageFlags : uint32_t
     {
-        Flat = 1,
-        Steps = 8,
+        AREA_FLAT = 1,
+        AREA_STEPS = 8,
     };
 
     enum EdgeType
