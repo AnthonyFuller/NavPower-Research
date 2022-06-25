@@ -32,8 +32,6 @@ SOFTWARE.
 
 #include "Vec3.h"
 
-#define FLT_EPSILON 1.192092896e-07F
-
 uint32_t RangeCheck(uint32_t val, uint32_t min, uint32_t max)
 {
     if (val > max) return max;
