@@ -91,6 +91,19 @@ namespace NavPower
         AREA_STEPS = 8,
     };
 
+    std::string AreaUsageFlagToString(AreaUsageFlags p_AreaUsageFlag)
+    {
+        switch (p_AreaUsageFlag)
+        {
+        case AreaUsageFlags::AREA_FLAT:
+            return "Flat";
+        case AreaUsageFlags::AREA_STEPS:
+            return "Steps";
+        default:
+            return "UNKNOWN!";
+        }
+    };
+
     enum EdgeType
     {
         EDGE_NORMAL,
