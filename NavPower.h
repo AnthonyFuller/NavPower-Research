@@ -342,6 +342,19 @@ namespace NavPower
 
             return (s_FoundVertex >= 2 ? s_FoundVertex : 2);
         }
+
+        Vec3 CalculateNormal()
+        {
+            Vec3 v0 = m_edges.at(0)->m_pos;
+            Vec3 v1 = m_edges.at(1)->m_pos;
+            Vec3 basis = m_edges.at(m_area->m_flags.GetBasisVert())->m_pos;
+
+            Vec3 vec1 = v1 - v0;
+            Vec3 vec2 = basis - v0;
+            Vec3 cross = vec1.Cross(vec2);
+
+            return cross.GetUnitVec();
+        }
     };
 
     // Helps with outputting the k-d tree as Bounding Boxes
